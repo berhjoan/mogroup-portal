@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MOGROUP · Packaging Solutions</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+  :root{
+    --bg:#0b1221;
+    --surface:#0f1a32;
+    --surface-2:#132142;
+    --ink:#e9f1ff;
+    --ink-70:#bcd0f3;
+    --brand:#2563eb;
+    --brand-2:#3b82f6;
+    --line:rgba(255,255,255,.10);
+    --shadow:0 10px 30px rgba(3,10,24,.55);
+    --radius:16px;
+    --trans:all .3s ease;
+    --hero-img:url("https://drive.google.com/thumbnail?id=1Y949gJ1JFlp3pCRNC7woNnCAOc8-fOC3&sz=w2400");
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:800;letter-spacing:.3px}
+
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(11,18,33,.95);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topwrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-logo{width:45px;height:45px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;padding:5px}
+  .brand-name{font-weight:800;letter-spacing:.6px;font-size:1.2rem}
+  .cta-top{display:flex;gap:12px}
+  .btn{border:0;border-radius:50px;padding:12px 20px;font-weight:700;cursor:pointer;transition:var(--trans);display:flex;align-items:center;gap:8px}
+  .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;box-shadow:0 4px 15px rgba(37,99,235,.3)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.4)}
+  .btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+  .btn-ghost:hover{background:rgba(255,255,255,.05);border-color:var(--brand)}
+
+  .hero{
+    height:clamp(260px,35vw,400px);
+    position:relative;overflow:hidden;background:#0a0f16
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:var(--hero-img) center 40%/cover no-repeat;
+    filter:saturate(1.1) brightness(1.05);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(8,12,20,0) 0%,rgba(8,12,20,.6) 58%,rgba(8,12,20,.97) 100%)
+  }
+  .hero-inner{
+    position:absolute;inset:auto 0 24px 0;max-width:1200px;margin:0 auto;padding:0 20px;
+    display:flex;align-items:end;justify-content:space-between;gap:16px
+  }
+  .hero-title{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;text-shadow:0 8px 24px rgba(0,0,0,.7)}
+  .hero-sub{color:var(--ink-70);font-size:1.1rem;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+
+  .container{max-width:1200px;margin:0 auto;padding:40px 20px}
+  .section{margin-top:32px}
+  .section h2{font-size:1.8rem;margin-bottom:12px;color:var(--ink)}
+  .section p.sub{color:var(--ink-70);margin-bottom:24px;font-size:1.05rem}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+  .card{
+    background:linear-gradient(180deg,#122142 0%, #0f1a32 100%);
+    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+    overflow:hidden;display:flex;flex-direction:column;transition:var(--trans)
+  }
+  .card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(3,10,24,.65)}
+  .shot{height:200px;background:#0a0f16;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .shot img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .card:hover .shot img{transform:scale(1.08)}
+  .pill{
+    position:absolute;top:14px;right:14px;background:#0e1a33;color:#b9cdf5;
+    border:1px solid rgba(37,99,235,.4);padding:8px 14px;font-size:.8rem;
+    border-radius:50px;font-weight:800;letter-spacing:.3px;text-transform:uppercase
+  }
+  .info{padding:20px;display:flex;flex-direction:column;gap:12px}
+  .info h3{font-size:1.1rem;color:var(--ink);line-height:1.4}
+  .muted{color:var(--ink-70);font-size:.96rem;line-height:1.5}
+  table.spec{width:100%;border-collapse:collapse;margin-top:10px}
+  table.spec td{border-top:1px dashed var(--line);padding:10px 6px;font-size:.96rem}
+  table.spec td:first-child{color:#cfe0ff;font-weight:600;width:35%}
+
+  .footer{
+    border-top:1px solid var(--line);margin-top:48px;padding:28px 0 50px;
+    color:var(--ink-70);text-align:center;font-size:.95rem
+  }
+
+  .pdfbar{
+    display:flex;gap:16px;align-items:center;justify-content:flex-end;
+    margin-top:20px;padding:20px;background:rgba(255,255,255,.03);
+    border-radius:var(--radius);border:1px solid var(--line)
+  }
+  .small{font-size:.95rem;color:var(--ink-70)}
+  
+  @media (max-width: 768px) {
+    .topwrap{flex-direction:column;gap:12px;text-align:center}
+    .cta-top{justify-content:center}
+    .grid{grid-template-columns:1fr;gap:20px}
+    .pdfbar{flex-direction:column;text-align:center}
+    .hero-inner{flex-direction:column;align-items:center;text-align:center}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topwrap">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="https://drive.google.com/thumbnail?id=1YKL_rvSrr0mhrBAj0FWHCry3gTbVrC_v&sz=w120" alt="MOGROUP" style="width:85%;height:auto"/>
+        </div>
+        <div class="brand-name">MOGROUP PACKAGING</div>
+      </div>
+      <div class="cta-top">
+        <button id="btnPdf" class="btn btn-primary">
+          <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+        </button>
+        <a href="index.html" class="btn btn-ghost">
+          <i class="fa-solid fa-arrow-left"></i> Volver al sitio
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero" aria-label="Soluciones de Packaging MOGROUP">
+    <div class="hero-inner container">
+      <div>
+        <div class="hero-title">Soluciones de Packaging Premium</div>
+        <div class="hero-sub">Vasos • Envolturas • Tray Liners • Bolsas Personalizadas</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENIDO -->
+  <main class="container">
+
+    <!-- Vasos -->
+    <section class="section" id="vasos">
+      <h2>Vasos de Papel Personalizados</h2>
+      <p class="sub">Single wall · Impresión personalizada · 6oz · 8oz · 12oz · 16oz. Ideales para bebidas calientes y frías.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1523942839745-7848d4a1322b?q=80&w=1600" alt="Vasos de papel personalizados" loading="lazy"/>
+          </div>
+          <span class="pill">Vasos</span>
+          <div class="info">
+            <h3>Vasos Single Wall - Impresión Personalizada</h3>
+            <p class="muted">Acabado premium de alta calidad, perfectos para impresión a full color de tu marca.</p>
+            <table class="spec">
+              <tr><td>Capacidades</td><td>6oz · 8oz · 12oz · 16oz</td></tr>
+              <tr><td>Uso</td><td>Bebidas calientes y frías</td></tr>
+              <tr><td>Personalización</td><td>Full color, logo, diseños</td></tr>
+              <tr><td>Material</td><td>Papel grado alimenticio</td></tr>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Envolturas -->
+    <section class="section" id="wrapping">
+      <h2>Envolturas de Papel</h2>
+      <p class="sub">Papel grado alimenticio impreso con tintas vegetales. Para envolver y como base de bandejas. Tamaños Small, Medium, Large.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1589191097115-3e1c8b9c1a7b?q=80&w=1600" alt="Envolturas de papel" loading="lazy"/>
+          </div>
+          <span class="pill">Envolturas</span>
+          <div class="info">
+            <h3>Envolturas Personalizadas</h3>
+            <p class="muted">Impresión personalizada de alta calidad para realzar tu marca.</p>
+            <table class="spec">
+              <tr><td>Small</td><td>12 × 12 pulgadas</td></tr>
+              <tr><td>Medium</td><td>12 × 17 pulgadas</td></tr>
+              <tr><td>Large</td><td>17 × 25 pulgadas</td></tr>
+              <tr><td>Características</td><td>Food grade · Tintas vegetales</td></tr>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tray Liners -->
+    <section class="section" id="tray">
+      <h2>Tray Liners</h2>
+      <p class="sub">Impresos a medida para forro de bandejas. Tamaños Small y Medium. Food grade con tintas vegetales.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1601312370499-7f57b34eb3ed?q=80&w=1600" alt="Tray liners" loading="lazy"/>
+          </div>
+          <span class="pill">Liners</span>
+          <div class="info">
+            <h3>Tray Liners Personalizados</h3>
+            <p class="muted">Perfectos para bandejas de servicio y mesas, con tu marca destacada.</p>
+            <table class="spec">
+              <tr><td>Small</td><td>12 × 12 pulgadas</td></tr>
+              <tr><td>Medium</td><td>12 × 17 pulgadas</td></tr>
+              <tr><td>Opcional</td><td>Formato cuadrado 8.5 pulgadas</td></tr>
+              <tr><td>Características</td><td>Food grade · Tintas vegetales</td></tr>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Bolsas -->
+    <section class="section" id="bags">
+      <h2>Bolsas de Papel</h2>
+      <p class="sub">Bolsas Delivery y Food Bags, disponibles en múltiples tamaños con medidas en pulgadas y centímetros.</p>
+      <div class="grid">
+
+        <!-- Delivery Bags -->
+        <article class="card">
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1600" alt="Bolsas delivery" loading="lazy"/>
+          </div>
+          <span class="pill">Delivery</span>
+          <div class="info">
+            <h3>Bolsas Delivery · Personalizadas</h3>
+            <table class="spec">
+              <tr><td>#12</td><td>9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm</td></tr>
+              <tr><td>#20</td><td>8.5 × 5.5 × 17 in · 24 × 15.8 × 42 cm</td></tr>
+              <tr><td>#35</td><td>9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm</td></tr>
+              <tr><td>#60</td><td>9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm</td></tr>
+              <tr><td>Colores</td><td>Múltiples colores de papel disponibles</td></tr>
+            </table>
+          </div>
+        </article>
+
+        <!-- Food Bags -->
+        <article class="card">
+          <div class="shot">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600" alt="Bolsas food" loading="lazy"/>
+          </div>
+          <span class="pill">Food</span>
+          <div class="info">
+            <h3>Bolsas Food · Personalizadas</h3>
+            <table class="spec">
+              <tr><td>#12</td><td>9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm</td></tr>
+              <tr><td>#20</td><td>8.5 × 5.5 × 17 in · 24 × 15.8 × 42 cm</td></tr>
+              <tr><td>Colores</td><td>Múltiples colores de papel disponibles</td></tr>
+              <tr><td>Uso</td><td>Alimentos · Comida para llevar</td></tr>
+            </table>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <div class="pdfbar">
+      <span class="small">¿Necesitas compartir este catálogo? Descarga la versión PDF lista para enviar.</span>
+      <button id="btnPdf2" class="btn btn-primary">
+        <i class="fa-solid fa-file-arrow-down"></i> Descargar PDF Completo
+      </button>
+    </div>
+
+    <footer class="footer">
+      © <span id="y"></span> MOGROUP — Packaging Division · info@mogroup.com · +507 1234-5678
+    </footer>
+  </main>
+
+<script>
+  // Año en footer
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // Generador de PDF
+  function makeCatalogPDF(){
+    try {
+      const jsp = window.jspdf;
+      if(!jsp || !jsp.jsPDF){ 
+        alert('No se pudo cargar el generador de PDF. Por favor intenta nuevamente.'); 
+        return; 
+      }
+      
+      const { jsPDF } = jsp;
+      const doc = new jsPDF('p','mm','a4');
+      const H = 297, W = 210;
+
+      // Utilidades
+      function header(title, sub=""){
+        doc.setFillColor(15, 36, 56);
+        doc.rect(0, 0, W, 24, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(16);
+        doc.setFont(undefined, 'bold');
+        doc.text("MOGROUP — Catálogo Packaging", 15, 16);
+        
+        if(sub){
+          doc.setFontSize(10);
+          doc.text(sub, W - 15, 16, {align: 'right'});
+        }
+        
+        doc.setFontSize(15);
+        doc.setTextColor(37, 99, 235);
+        doc.setFont(undefined, 'bold');
+        doc.text(title, 15, 36);
+        doc.setDrawColor(37, 99, 235);
+        doc.setLineWidth(0.8);
+        doc.line(15, 38, W - 15, 38);
+      }
+
+      function foot(){
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text("MOGROUP · info@mogroup.com · +507 1234-5678", 15, H - 12);
+        doc.text(`Página ${doc.getNumberOfPages()}`, W - 15, H - 12, {align: 'right'});
+      }
+
+      function table(rows, yStart){
+        let y = yStart;
+        doc.setFontSize(11);
+        doc.setTextColor(30, 41, 59);
+        
+        rows.forEach(r => {
+          if(y > 270){
+            foot();
+            doc.addPage();
+            y = 25;
+          }
+          
+          doc.setFont(undefined, 'bold');
+          doc.text(r[0], 17, y);
+          doc.setFont(undefined, 'normal');
+          doc.text(r[1], W - 17, y, {align: 'right'});
+          y += 7;
+        });
+        
+        return y;
+      }
+
+      // Portada
+      header("Soluciones de Packaging", new Date().toLocaleDateString('es-ES'));
+      doc.setFontSize(13);
+      doc.setTextColor(51, 65, 85);
+      doc.text("Vasos • Envolturas • Tray Liners • Bolsas Personalizadas", 15, 50);
+      doc.setFontSize(11);
+      doc.setTextColor(100, 116, 139);
+      const description = "Soluciones de empaque premium con impresión personalizada, papeles grado alimenticio y opciones ecológicas para tu negocio.";
+      doc.splitTextToSize(description, W - 30).forEach((line, i) => {
+        doc.text(line, 15, 60 + (i * 6));
+      });
+      foot();
+
+      // Secciones del catálogo
+      const sections = [
+        {
+          title: "Vasos de Papel",
+          content: [
+            ["Producto", "Vasos Single Wall - Personalizados"],
+            ["Capacidades", "6oz · 8oz · 12oz · 16oz"],
+            ["Uso", "Bebidas calientes y frías"],
+            ["Personalización", "Full color, logo, diseños"],
+            ["Material", "Papel grado alimenticio"]
+          ]
+        },
+        {
+          title: "Envolturas de Papel", 
+          content: [
+            ["Producto", "Envolturas Personalizadas"],
+            ["Tamaño Small", "12 × 12 pulgadas"],
+            ["Tamaño Medium", "12 × 17 pulgadas"], 
+            ["Tamaño Large", "17 × 25 pulgadas"],
+            ["Características", "Food grade · Tintas vegetales"]
+          ]
+        },
+        {
+          title: "Tray Liners",
+          content: [
+            ["Producto", "Tray Liners Personalizados"],
+            ["Tamaño Small", "12 × 12 pulgadas"],
+            ["Tamaño Medium", "12 × 17 pulgadas"],
+            ["Formato Opcional", "8.5 pulgadas cuadradas"],
+            ["Características", "Food grade · Tintas vegetales"]
+          ]
+        },
+        {
+          title: "Bolsas Delivery",
+          content: [
+            ["Producto", "Bolsas Delivery Personalizadas"],
+            ["#12", "9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm"],
+            ["#20", "8.5 × 5.5 × 17 in · 24 × 15.8 × 42 cm"],
+            ["#35", "9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm"],
+            ["#60", "9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm"],
+            ["Colores", "Múltiples colores disponibles"]
+          ]
+        },
+        {
+          title: "Bolsas Food",
+          content: [
+            ["Producto", "Bolsas Food Personalizadas"],
+            ["#12", "9.5 × 6.25 × 16.5 in · 24 × 15.8 × 42 cm"],
+            ["#20", "8.5 × 5.5 × 17 in · 24 × 15.8 × 42 cm"],
+            ["Colores", "Múltiples colores disponibles"],
+            ["Uso", "Alimentos · Comida para llevar"]
+          ]
+        }
+      ];
+
+      // Añadir secciones
+      sections.forEach((section, index) => {
+        if(index > 0) doc.addPage();
+        header(section.title);
+        table(section.content, 48);
+        foot();
+      });
+
+      // Guardar PDF
+      doc.save('MOGROUP_Catalogo_Packaging.pdf');
+      
+    } catch (error) {
+      console.error('Error generando PDF:', error);
+      alert('Ocurrió un error al generar el PDF. Por favor intenta nuevamente.');
+    }
+  }
+
+  // Event listeners
+  document.getElementById('btnPdf').addEventListener('click', makeCatalogPDF);
+  document.getElementById('btnPdf2').addEventListener('click', makeCatalogPDF);
+</script>
+</body>
+</html>

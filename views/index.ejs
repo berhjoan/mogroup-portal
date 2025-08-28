@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOGROUP · Supplies • Technology • Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <img src="/images/logo.png" alt="MOGROUP Logo">
+            </div>
+            <div class="logo-text">MOGROUP</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#clientes">Clientes</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Soluciones Integrales para su Empresa</h1>
+            <p>Ofrecemos servicios de suministros, tecnología y logística de primer nivel para impulsar su negocio hacia el éxito.</p>
+            <div class="hero-buttons">
+                <a href="#clientes" class="btn btn-primary">
+                    <i class="fas fa-users"></i> Nuestros Clientes
+                </a>
+                <a href="#contacto" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> Contactar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section" id="clientes">
+        <h2 class="section-title">Nuestros Clientes Destacados</h2>
+        <div class="clients-grid">
+            <% clients.forEach(client => { %>
+            <div class="client-card" data-client-id="<%= client._id %>">
+                <div class="client-logo">
+                    <img src="/client-logos/<%= client.logo %>" alt="<%= client.name %> Logo">
+                </div>
+                <h3 class="client-name"><%= client.name %></h3>
+                <p class="client-desc"><%= client.description %></p>
+            </div>
+            <% }); %>
+            
+            <div class="client-card" data-client-id="new">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=++" alt="Nuevo Cliente Logo">
+                </div>
+                <h3 class="client-name">Su Empresa Aquí</h3>
+                <p class="client-desc">Únase a nuestra cartera de clientes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Acceso -->
+    <div class="modal" id="accessModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-logo">
+                <img id="modalClientLogo" src="" alt="Client Logo">
+            </div>
+            <h2 id="modalClientName">Acceso al Catálogo</h2>
+            <p>Ingrese el código de acceso proporcionado para ver el catálogo personalizado</p>
+            <form id="accessForm">
+                <input type="hidden" id="clientId" value="">
+                <div class="code-input">
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                </div>
+                <button type="submit" class="submit-btn">Acceder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="/images/logo-small.png" alt="MOGROUP Logo">
+                    <span>MOGROUP</span>
+                </div>
+                <p>Soluciones integrales en suministros, tecnología y logística para empresas de todos los tamaños.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#clientes">Clientes</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> info@mogroup.com</li>
+                    <li><i class="fas fa-phone"></i> +507 1234-5678</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Ciudad de Panamá, Panamá</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 MOGROUP - Todos los derechos reservados
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "mogroup-portal",
+  "version": "1.0.0",
+  "description": "Portal web para MOGROUP con catálogos y sistema de clientes",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Build completo'",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "mogroup",
+    "catalogos",
+    "insumos",
+    "packaging",
+    "panama"
+  ],
+  "author": "MOGROUP",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOGROUP · Supplies • Technology • Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-900: #0f2438;
+            --brand-800: #112a45;
+            --brand-700: #143253;
+            --brand: #1f56a6;
+            --brand-accent: #2b7bff;
+            --ink: #e9f0fb;
+            --ink-70: #b9c7dc;
+            --ink-40: #92a6c1;
+            --card: #0e2236;
+            --chip: #153250;
+            --ok: #22c55e;
+            --danger: #ef4444;
+            --shadow: 0 10px 28px rgba(3,12,27,.35), inset 0 1px 0 rgba(255,255,255,.04);
+            --radius: 14px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, var(--brand-900), #0c1b2a 64%);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header y Navegación */
+        header {
+            background: rgba(15, 36, 56, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: white;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-img img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #cfe2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand-accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(15, 36, 56, 0.7), rgba(15, 36, 56, 0.9)), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #cfe2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--ink-70);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand), var(--brand-accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(43, 123, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(43, 123, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ink);
+            border: 2px solid var(--brand);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(43, 123, 255, 0.1);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 5rem 2rem;
+            background: var(--brand-800);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--ink-70);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--brand), var(--brand-accent));
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--brand), var(--brand-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-desc {
+            color: var(--ink-70);
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        /* Catalogs Section */
+        .catalogs-section {
+            padding: 5rem 2rem;
+            background: var(--brand-900);
+        }
+
+        .catalogs-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 2rem;
+        }
+
+        .catalogs-sidebar {
+            flex: 0 0 280px;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .catalogs-sidebar h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--brand);
+        }
+
+        .catalog-nav {
+            list-style: none;
+        }
+
+        .catalog-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .catalog-nav a {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: var(--ink);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .catalog-nav a:hover, .catalog-nav a.active {
+            background: var(--brand);
+            color: white;
+        }
+
+        .catalog-content {
+            flex: 1;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            min-height: 500px;
+        }
+
+        .catalog-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--ink-70);
+        }
+
+        .catalog-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--brand);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Clients Section */
+        .clients-section {
+            padding: 5rem 2rem;
+            background: var(--brand-800);
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .client-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .client-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .client-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .client-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .client-name {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .client-desc {
+            color: var(--ink-70);
+            font-size: 0.9rem;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 5rem 2rem;
+            background: var(--brand-900);
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--ink-70);
+        }
+
+        .about-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Modal de Acceso */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--ink);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .modal-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .modal h2 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            color: var(--ink-70);
+            margin-bottom: 2rem;
+        }
+
+        .code-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-input input {
+            width: 40px;
+            height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 2px solid var(--brand);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: var(--ink);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--brand), var(--brand-accent));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(43, 123, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--brand-900);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo img {
+            width: 40px;
+        }
+
+        .footer-logo span {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--ink-70);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--ink);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--ink-70);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .catalogs-container {
+                flex-direction: column;
+            }
+            
+            .catalogs-sidebar {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .clients-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .service-card, .client-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <img src="https://drive.google.com/thumbnail?id=1YKL_rvSrr0mhrBAj0FWHCry3gTbVrC_v&sz=w200" alt="MOGROUP Logo">
+            </div>
+            <div class="logo-text">MOGROUP</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#catalogos">Catálogos</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#clientes">Clientes</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Soluciones Integrales para su Empresa</h1>
+            <p>Ofrecemos servicios de suministros, tecnología y logística de primer nivel para impulsar su negocio hacia el éxito.</p>
+            <div class="hero-buttons">
+                <a href="#servicios" class="btn btn-primary">
+                    <i class="fas fa-concierge-bell"></i> Nuestros Servicios
+                </a>
+                <a href="#catalogos" class="btn btn-secondary">
+                    <i class="fas fa-book"></i> Ver Catálogos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="servicios">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <p class="section-subtitle">Brindamos soluciones especializadas para cada sector, optimizando procesos y maximizando la eficiencia de su negocio.</p>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-truck-loading"></i>
+                </div>
+                <h3 class="service-name">Logística y Distribución</h3>
+                <p class="service-desc">Soluciones integrales de cadena de suministro, almacenamiento y distribución para optimizar sus operaciones.</p>
+                <a href="#catalogos" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i> Saber más
+                </a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="service-name">Soluciones Tecnológicas</h3>
+                <p class="service-desc">Implementación de sistemas tecnológicos avanzados para mejorar la eficiencia y productividad de su empresa.</p>
+                <a href="#catalogos" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i> Saber más
+                </a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <h3 class="service-name">Suministros y Equipos</h3>
+                <p class="service-desc">Proveedores de insumos, materiales y equipos especializados para diversos sectores industriales.</p>
+                <a href="#catalogos" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i> Saber más
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalogs Section -->
+    <section class="catalogs-section" id="catalogos">
+        <h2 class="section-title">Nuestros Catálogos</h2>
+        <p class="section-subtitle">Explore nuestros productos especializados por categorías y encuentre exactamente lo que su empresa necesita.</p>
+        
+        <div class="catalogs-container">
+            <div class="catalogs-sidebar">
+                <h3><i class="fas fa-list"></i> Categorías</h3>
+                <ul class="catalog-nav">
+                    <li><a href="#" class="active" data-catalog="insumos"><i class="fas fa-box"></i> Insumos</a></li>
+                    <li><a href="#" data-catalog="packaging"><i class="fas fa-gift"></i> Packaging</a></li>
+                    <li><a href="#" data-catalog="tecnologia"><i class="fas fa-microchip"></i> Tecnología</a></li>
+                    <li><a href="#" data-catalog="logistica"><i class="fas fa-shipping-fast"></i> Soluciones Logísticas</a></li>
+                </ul>
+            </div>
+            
+            <div class="catalog-content">
+                <a href="#catalogos" class="back-btn" id="backButton" style="display: none;">
+                    <i class="fas fa-arrow-left"></i> Volver al menú
+                </a>
+                <div class="catalog-placeholder" id="catalogPlaceholder">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Seleccione una categoría para ver los productos</h3>
+                    <p>Explore nuestros catálogos especializados haciendo clic en las categorías del menú lateral.</p>
+                </div>
+                <div id="catalogContent" style="display: none;">
+                    <!-- El contenido del catálogo se cargará aquí -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="nosotros">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Sobre MOGROUP</h2>
+                <p>MOGROUP es una empresa líder en soluciones integrales para empresas, especializada en suministros, tecnología y logística. Nuestra misión es impulsar el éxito de nuestros clientes mediante servicios de alta calidad y soluciones innovadoras.</p>
+                <p>Con años de experiencia en el mercado, hemos desarrollado un enfoque personalizado que nos permite entender las necesidades específicas de cada cliente y ofrecer soluciones a medida que generan valor real para sus operaciones.</p>
+                <a href="#contacto" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Contáctenos
+                </a>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Equipo MOGROUP">
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section" id="clientes">
+        <h2 class="section-title">Nuestros Clientes</h2>
+        <p class="section-subtitle">Trabajamos con empresas líderes en diversos sectores, brindando soluciones que generan valor y optimizan sus operaciones.</p>
+        
+        <div class="clients-grid">
+            <div class="client-card" data-client="spigolo">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=Spigolo" alt="Spigolo Logo">
+                </div>
+                <h3 class="client-name">Panadería Spigolo</h3>
+                <p class="client-desc">Panadería artesanal de calidad premium</p>
+            </div>
+            
+            <div class="client-card" data-client="litech">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=Litech" alt="Litech Logo">
+                </div>
+                <h3 class="client-name">Litech</h3>
+                <p class="client-desc">Soluciones tecnológicas innovadoras</p>
+            </div>
+            
+            <div class="client-card" data-client="peru-chicken">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=Peru+Chicken" alt="Perú Chicken Logo">
+                </div>
+                <h3 class="client-name">Restaurante Perú Chicken</h3>
+                <p class="client-desc">Gastronomía peruana de alta calidad</p>
+            </div>
+            
+            <div class="client-card" data-client="avila">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=Panadería+Avila" alt="Panadería Avila Logo">
+                </div>
+                <h3 class="client-name">Panadería Avila</h3>
+                <p class="client-desc">Tradición y sabor en cada producto</p>
+            </div>
+            
+            <div class="client-card" data-client="migas-mall">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=Migas+Mall" alt="Migas Mall Logo">
+                </div>
+                <h3 class="client-name">Migas Mall</h3>
+                <p class="client-desc">Centro comercial con las mejores marcas</p>
+            </div>
+            
+            <div class="client-card" data-client="nuevo-cliente">
+                <div class="client-logo">
+                    <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=++" alt="Nuevo Cliente Logo">
+                </div>
+                <h3 class="client-name">Su Empresa Aquí</h3>
+                <p class="client-desc">Únase a nuestra cartera de clientes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Acceso -->
+    <div class="modal" id="accessModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-logo">
+                <img id="modalClientLogo" src="" alt="Client Logo">
+            </div>
+            <h2 id="modalClientName">Acceso al Catálogo</h2>
+            <p>Ingrese el código de acceso proporcionado para ver el catálogo personalizado</p>
+            <form id="accessForm">
+                <div class="code-input">
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                    <input type="text" maxlength="1" pattern="[0-9]" required>
+                </div>
+                <button type="submit" class="submit-btn">Acceder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="https://drive.google.com/thumbnail?id=1YKL_rvSrr0mhrBAj0FWHCry3gTbVrC_v&sz=w100" alt="MOGROUP Logo">
+                    <span>MOGROUP</span>
+                </div>
+                <p>Soluciones integrales en suministros, tecnología y logística para empresas de todos los tamaños.</p>
+                <div style="margin-top: 1rem;">
+                    <a href="#" style="color: var(--brand); margin-right: 1rem;"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" style="color: var(--brand); margin-right: 1rem;"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" style="color: var(--brand);"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#catalogos">Catálogos</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#clientes">Clientes</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> info@mogroup.com</li>
+                    <li><i class="fas fa-phone"></i> +507 1234-5678</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Ciudad de Panamá, Panamá</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 MOGROUP - Todos los derechos reservados
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientCards = document.querySelectorAll('.client-card');
+            const modal = document.getElementById('accessModal');
+            const closeModal = document.querySelector('.close-modal');
+            const modalClientLogo = document.getElementById('modalClientLogo');
+            const modalClientName = document.getElementById('modalClientName');
+            const accessForm = document.getElementById('accessForm');
+            const codeInputs = document.querySelectorAll('.code-input input');
+            const catalogLinks = document.querySelectorAll('.catalog-nav a');
+            const catalogPlaceholder = document.getElementById('catalogPlaceholder');
+            const catalogContent = document.getElementById('catalogContent');
+            const backButton = document.getElementById('backButton');
+            
+            // Códigos de acceso para cada cliente (simulados)
+            const clientCodes = {
+                'spigolo': '9012',
+                'litech': '3456',
+                'peru-chicken': '7890',
+                'avila': '2345',
+                'migas-mall': '6789'
+            };
+            
+            // Abrir modal al hacer clic en una tarjeta de cliente
+            clientCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const client = this.getAttribute('data-client');
+                    const logoSrc = this.querySelector('img').src;
+                    const clientName = this.querySelector('.client-name').textContent;
+                    
+                    modalClientLogo.src = logoSrc;
+                    modalClientName.textContent = `Acceso a ${clientName}`;
+                    modal.style.display = 'flex';
+                    
+                    // Guardar el cliente actual en el modal
+                    modal.setAttribute('data-current-client', client);
+                    
+                    // Limpiar inputs
+                    codeInputs.forEach(input => input.value = '');
+                    codeInputs[0].focus();
+                });
+            });
+            
+            // Cerrar modal
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Manejar entrada del código
+            codeInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < codeInputs.length - 1) {
+                        codeInputs[index + 1].focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                        codeInputs[index - 1].focus();
+                    }
+                });
+            });
+            
+            // Manejar envío del formulario
+            accessForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const client = modal.getAttribute('data-current-client');
+                const enteredCode = Array.from(codeInputs).map(input => input.value).join('');
+                
+                if (clientCodes[client] === enteredCode) {
+                    alert('¡Código correcto! Accediendo al catálogo personalizado...');
+                    // Aquí redirigirías al catálogo específico del cliente
+                    modal.style.display = 'none';
+                } else {
+                    alert('Código incorrecto. Por favor, intente nuevamente.');
+                    codeInputs.forEach(input => input.value = '');
+                    codeInputs[0].focus();
+                }
+            });
+            
+            // Navegación de catálogos
+            catalogLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remover clase active de todos los enlaces
+                    catalogLinks.forEach(l => l.classList.remove('active'));
+                    // Agregar clase active al enlace clickeado
+                    this.classList.add('active');
+                    
+                    const catalogType = this.getAttribute('data-catalog');
+                    loadCatalog(catalogType);
+                });
+            });
+            
+            // Botón de volver
+            backButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                showCatalogMenu();
+            });
+            
+            function loadCatalog(type) {
+                // Ocultar placeholder y mostrar contenido
+                catalogPlaceholder.style.display = 'none';
+                catalogContent.style.display = 'block';
+                backButton.style.display = 'inline-flex';
+                
+                // Simular carga de contenido según el tipo de catálogo
+                let catalogHTML = '';
+                
+                switch(type) {
+                    case 'insumos':
+                        catalogHTML = `
+                            <h2><i class="fas fa-box"></i> Catálogo de Insumos</h2>
+                            <p>Explora nuestra amplia gama de productos de limpieza, papelería, desechables y suministros industriales.</p>
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <a href="catalogo-insumos.html" class="btn btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Ver Catálogo Completo
+                                </a>
+                            </div>
+                        `;
+                        break;
+                    case 'packaging':
+                        catalogHTML = `
+                            <h2><i class="fas fa-gift"></i> Catálogo de Packaging</h2>
+                            <p>Descubre nuestras soluciones de empaque y embalaje para todo tipo de industrias y necesidades.</p>
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <a href="catalogo-packaging.html" class="btn btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Ver Catálogo Completo
+                                </a>
+                            </div>
+                        `;
+                        break;
+                    case 'tecnologia':
+                        catalogHTML = `
+                            <h2><i class="fas fa-microchip"></i> Soluciones Tecnológicas</h2>
+                            <p>Conoce nuestras opciones en hardware, software y soluciones IT para optimizar tu empresa.</p>
+                            <div style="margin: 2rem 0; padding: 1.5rem; background: var(--chip); border-radius: var(--radius);">
+                                <p>Próximamente: Estamos preparando nuestro catálogo de tecnología.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'logistica':
+                        catalogHTML = `
+                            <h2><i class="fas fa-shipping-fast"></i> Soluciones Logísticas</h2>
+                            <p>Descubre nuestros servicios especializados en cadena de suministro y distribución.</p>
+                            <div style="margin: 2rem 0; padding: 1.5rem; background: var(--chip); border-radius: var(--radius);">
+                                <p>Próximamente: Estamos preparando nuestro catálogo de soluciones logísticas.</p>
+                            </div>
+                        `;
+                        break;
+                }
+                
+                catalogContent.innerHTML = catalogHTML;
+                
+                // Scroll suave a la sección de catálogos
+                document.getElementById('catalogos').scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            function showCatalogMenu() {
+                // Mostrar placeholder y ocultar contenido
+                catalogPlaceholder.style.display = 'flex';
+                catalogContent.style.display = 'none';
+                backButton.style.display = 'none';
+                
+                // Remover clase active de todos los enlaces
+                catalogLinks.forEach(l => l.classList.remove('active'));
+            }
+            
+            // Efecto de escritura en el hero
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            heroTitle.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < originalText.length) {
+                    heroTitle.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            setTimeout(typeWriter, 500);
+        });
+    </script>
+</body>
+</html>

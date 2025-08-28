@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MOGROUP - Catálogo Ejecutivo</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+
+<style>
+  :root{
+    /* Paleta azul clara coherente con index */
+    --bg:#0c1730;
+    --surface:#122244;
+    --surface-2:#152a4f;
+    --ink:#eaf2ff;
+    --ink-muted:#c7d6ee;
+    --brand:#2563eb;
+    --brand-2:#3b82f6;
+    --line:rgba(255,255,255,.10);
+    --radius:14px;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --trans:all .25s ease;
+
+    /* Carrito claro */
+    --cart-bg:#ffffff;
+    --cart-ink:#1b2430;
+    --cart-ink-muted:#5a6b7c;
+    --cart-line:rgba(0,0,0,.08);
+
+    /* ===== HEADER: imagen ===== */
+    --hero-img: url("https://drive.google.com/thumbnail?id=1yAxvO9Z5uDyO7JteLlYMjQshL6f3ly87&sz=w2400");
+    --hero-pos: center 1%;
+
+    /* Controles visuales del header */
+    --hero-brightness: 1.06;  /* 1 = normal, <1 más oscuro, >1 más brillante */
+    --hero-contrast: 1;    /* 1 = normal, >1 más contraste */
+    --hero-saturate: 0.9;    /* 1 = normal, >1 colores vivos */
+    --hero-scale: 1.0;        /* 1.8 reduce ~20%, 1 normal */
+
+
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Source Sans Pro',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:'Montserrat',sans-serif;font-weight:800;letter-spacing:.3px}
+
+  /* ======= HEADER SOLO IMAGEN ======= */
+  .hero{
+    height:clamp(220px, 28vw, 360px);
+    position:relative; overflow:hidden; background:#0a0f16;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background: var(--hero-img) var(--hero-pos) / cover no-repeat;
+    filter: saturate(1) brightness(1);
+    transform:translateZ(0);
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(5,8,13,.00) 0%, rgba(5,8,13,.45) 58%, rgba(5,8,13,.90) 100%);
+  }
+
+  /* ======= FILTROS ======= */
+  .container{max-width:1200px;margin:0 auto;padding:36px 24px}
+  .filter-card{
+    background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);
+    border:1px solid var(--line);padding:18px 16px;margin-bottom:26px
+  }
+  .filters{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .search{position:relative;flex:1;min-width:280px}
+  .search input{
+    width:100%;background:var(--surface-2);color:var(--ink);
+    border:1px solid var(--line);border-radius:999px;padding:14px 16px 14px 46px;
+    outline:none;transition:var(--trans);font-size:1rem
+  }
+  .search input:focus{border-color:rgba(37,99,235,.5);box-shadow:0 0 0 4px rgba(59,130,246,.18)}
+  .search i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#b7c9ef}
+  .cats{display:flex;flex-wrap:wrap;gap:10px}
+  .cat{
+    background:var(--surface-2);color:#d7e3fa;border:1px solid var(--line);
+    padding:10px 16px;border-radius:999px;font-weight:700;letter-spacing:.2px;
+    cursor:pointer;transition:var(--trans)
+  }
+  .cat:hover{border-color:rgba(59,130,246,.5);color:#fff}
+  .cat.active{background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(59,130,246,.25)}
+
+  /* ======= GRID ======= */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+  .card{
+    position:relative;background:linear-gradient(180deg,#132447 0%, #122140 100%);
+    border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);display:flex;flex-direction:column;transition:var(--trans);overflow:hidden
+  }
+  .card::after{
+    content:""; position:absolute; inset:auto 0 0 0; height:3px;
+    background:linear-gradient(90deg,transparent, rgba(59,130,246,.85), transparent);
+    opacity:.75;
+  }
+  .card:hover{transform:translateY(-4px);border-color:rgba(59,130,246,.35);box-shadow:0 14px 36px rgba(0,0,0,.55)}
+  .imgbox{height:220px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:#0a0f16}
+  .imgbox img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+  .card:hover .imgbox img{transform:scale(1.05)}
+  .pill{position:absolute;top:14px;right:14px;background:#122447;border:1px solid rgba(59,130,246,.45);color:#b8d3ff;font-weight:800;font-size:.7rem;padding:6px 10px;border-radius:999px;letter-spacing:.4px;text-transform:uppercase}
+  .info{padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .title{font-weight:800;color:#f4f8ff;font-size:1.02rem;line-height:1.35}
+  .chip{align-self:flex-start;background:#0e1e3e;color:#a9caff;border:1px solid rgba(59,130,246,.35);padding:6px 10px;border-radius:999px;font-weight:700;font-size:.74rem;letter-spacing:.3px;text-transform:uppercase}
+  .actions{margin-top:auto;display:flex;gap:10px;align-items:center}
+  .qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#0a0f16}
+  .qty button{width:40px;height:40px;border:0;background:#0e1725;color:#cfe0ff;font-weight:900;cursor:pointer}
+  .qty button:hover{background:#142543}
+  .qty input{width:52px;height:40px;border:0;background:transparent;color:#eaf2ff;text-align:center;font-weight:800}
+  .add{flex:1;border:0;border-radius:999px;padding:12px 16px;cursor:pointer;
+       background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff;font-weight:800;letter-spacing:.3px}
+  .add:hover{box-shadow:0 10px 28px rgba(59,130,246,.35);transform:translateY(-1px)}
+
+  /* ======= CARRITO ======= */
+  .cart{
+    position:fixed;right:18px;bottom:18px;width:380px;max-height:70vh;z-index:1000;
+    background:var(--cart-bg);color:var(--cart-ink);
+    border:1px solid var(--cart-line);border-radius:16px;padding:14px 14px 16px;box-shadow:0 14px 40px rgba(0,0,0,.25);
+    display:flex;flex-direction:column;gap:10px;transition:var(--trans)
+  }
+  .cart.collapsed{width:auto;max-width:90vw;padding:10px 12px;border-radius:999px;gap:0}
+  .cart.collapsed .wipe, .cart.collapsed .items, .cart.collapsed .sum, .cart.collapsed .cta{display:none!important}
+  .head{display:flex;align-items:center;justify-content:space-between}
+  .head h2{font-size:1.06rem;font-weight:800;color:var(--cart-ink)}
+  .count{background:#eef3ff;color:#1f56a6;border:1px solid #cfe0ff;padding:2px 8px;border-radius:999px;margin-left:6px;font-size:.8rem}
+  .toggle{border:0;background:#0f1724;color:#dbe7f7;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:999px;font-weight:800;cursor:pointer}
+  .toggle:hover{filter:brightness(1.1)}
+  .wipe{margin-top:2px}
+  .wipe button{background:none;border:none;color:#d13a3a;font-weight:800;cursor:pointer}
+  .items{max-height:38vh;overflow:auto;border-top:1px solid var(--cart-line);border-bottom:1px solid var(--cart-line);padding:8px 0}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--cart-line)}
+  .row:last-child{border-bottom:0}
+  .name{font-weight:800}
+  .qtytxt{color:var(--cart-ink-muted);font-size:.9rem}
+  .rm{background:none;border:none;color:#d13a3a;font-size:1.1rem;cursor:pointer}
+  .sum{display:flex;align-items:center;justify-content:space-between;color:var(--cart-ink)}
+  .cta{display:flex;flex-direction:column;gap:8px}
+  .whats,.pdf{border:0;border-radius:10px;padding:14px 14px;color:#fff;font-weight:800;cursor:pointer}
+  .whats{background:linear-gradient(135deg,#25D366,#128C7E)}
+  .pdf{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+
+  .notice{position:fixed;top:18px;right:18px;background:#0e1b2d;border:1px solid rgba(59,130,246,.35);color:#cfe1ff;
+          padding:12px 16px;border-radius:12px;box-shadow:var(--shadow);opacity:0;transition:opacity .25s;z-index:1300}
+  .notice.show{opacity:1}
+
+  @media (max-width:992px){.grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}.cart{width:360px}}
+  @media (max-width:768px){.cart{left:14px;right:14px;width:auto}}
+  @media (max-width:576px){.grid{grid-template-columns:1fr}.actions{flex-direction:column}.qty{width:100%}.add{width:100%}}
+</style>
+</head>
+<body>
+
+  <!-- ===== HEADER SOLO IMAGEN ===== -->
+  <header class="hero" aria-label="Imagen de cabecera MOGROUP"></header>
+
+  <!-- ===== FILTROS ===== -->
+  <div class="container">
+    <div class="filter-card">
+      <div class="filters">
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="searchInput" type="text" placeholder="Buscar productos…">
+        </div>
+        <div class="cats">
+          <button class="cat active" data-category="all">Todos</button>
+          <button class="cat" data-category="papel">Papel</button>
+          <button class="cat" data-category="bolsas">Bolsas</button>
+          <button class="cat" data-category="limpieza">Limpieza</button>
+          <button class="cat" data-category="desechables">Desechables</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div id="productsGrid" class="grid"></div>
+  </div>
+
+  <!-- ===== CARRITO ===== -->
+  <aside id="cart" class="cart collapsed" aria-live="polite">
+    <div class="head">
+      <h2>Cotización <span class="count" id="cartCount">0</span></h2>
+      <button id="toggle" class="toggle"><i id="chev" class="fa-solid fa-chevron-up"></i> <span id="ttext">Abrir</span></button>
+    </div>
+    <div class="wipe"><button id="clear" title="Vaciar"><i class="fa-solid fa-trash"></i> Vaciar</button></div>
+    <div id="items" class="items">
+      <div class="row" style="justify-content:center;color:var(--cart-ink-muted)">La cotización está vacía</div>
+    </div>
+    <div class="sum"><div id="total">Total: 0 producto(s)</div></div>
+    <div class="cta">
+      <button id="whats" class="whats" disabled><i class="fa-brands fa-whatsapp"></i> Enviar por WhatsApp</button>
+      <button id="pdf" class="pdf" disabled><i class="fa-solid fa-file-pdf"></i> Generar PDF</button>
+    </div>
+  </aside>
+
+  <div id="notice" class="notice"></div>
+
+<script>
+  const WHATSAPP_NUMBER = '50764215897';
+  const PLACEHOLDER = "https://via.placeholder.com/1200x800/ffffff/1b2430?text=Imagen+pr%C3%B3ximamente";
+
+  /* Imágenes desde Google Drive (thumbnail) — COMPLETO (1–40) */
+  const imageMap = {
+    1:"https://drive.google.com/thumbnail?id=1wB7k3xR9b-i3tDPulCijy5-AmSTjFgAA&sz=w1200",
+    2:"https://drive.google.com/thumbnail?id=129Mxgvn1ab5lMt1wbHDzCNDopE7ftuM5&sz=w1200",
+    3:"https://drive.google.com/thumbnail?id=155e9xPL7Ztd2n3xqChyu46WWJ0ABzjqo&sz=w1200",
+    4:"https://drive.google.com/thumbnail?id=1vjDi4_VxtydcTyG1yy-6zqYVTtsmU2X6&sz=w1200",
+    5:"https://drive.google.com/thumbnail?id=1trR_9Yis7HBUxOVUG4i_WNE71X6r1iDH&sz=w1200",
+    6:"https://drive.google.com/thumbnail?id=1MIIYYuamtODVbXUh9EjkAKnfXv0hFy0u&sz=w1200",
+    7:"https://drive.google.com/thumbnail?id=1VYo_pa2Bqnv_dU6Xm-uIIpl958D8vCuV&sz=w1200",
+    8:"https://drive.google.com/thumbnail?id=1jyDk8naCrAQy6Bb3O0zTXYYzj7R-EHDD&sz=w1200",
+    9:"https://drive.google.com/thumbnail?id=1MBxOfyOhgLGdx6LNuM0no57IES3sw2lp&sz=w1200",
+    10:"https://drive.google.com/thumbnail?id=1_abP-0FZwGer3fWhAMg54f037KAOKmVr&sz=w1200",
+    11:"https://drive.google.com/thumbnail?id=1990dq7YiAXPvDENEqIryJHQhLGY4Abc4&sz=w1200",
+    12:"https://drive.google.com/thumbnail?id=157zKk9QQcfYjt5yPgzqZTfa57IQtEZjt&sz=w1200",
+    13:"https://drive.google.com/thumbnail?id=1hbXZ9Qk1OxqiZ9iaPOhecJPi0cpBYXwq&sz=w1200",
+    14:"https://drive.google.com/thumbnail?id=1zo_moZS3sZFM2iFEoqEugHxDgs4QuKQi&sz=w1200",
+    15:"https://drive.google.com/thumbnail?id=1MDFq0nBYrfOP0JHn-QrR23XJys-OnVCu&sz=w1200",
+    16:"https://drive.google.com/thumbnail?id=1MraipgD8QytfY7-5tzJ7wgYPIrEYNAKq&sz=w1200",
+    17:"https://drive.google.com/thumbnail?id=1vf3yrDtqo8yw4T9RReCTD46KBTXiZdeG&sz=w1200",
+    18:"https://drive.google.com/thumbnail?id=1M0CAl4WjumrfcYtQbPrZbMqUor20cFuR&sz=w1200",
+    19:"https://drive.google.com/thumbnail?id=1P7v9BPhliwaVVUFHVUVkS_r2_LrfjslQ&sz=w1200",
+    21:"https://drive.google.com/thumbnail?id=1D5CY3uv_rDUrgB5VukhxAMvmOTFWQM2Q&sz=w1200",
+    22:"https://drive.google.com/thumbnail?id=14F5WIo5CLTDbFhWnCjRRuAq7z8KrivcU&sz=w1200",
+    23:"https://drive.google.com/thumbnail?id=1a3an3LE64UWxpPE-uDgZpcwuhvGjTRZX&sz=w1200",
+    24:"https://drive.google.com/thumbnail?id=1Pn6qlB0aoeReKYDT_BEphHmxWz_bUnfF&sz=w1200",
+    25:"https://drive.google.com/thumbnail?id=1ksK0BsUh_mH7jvSPtuMFMOkZFJuu3na9&sz=w1200",
+    20:"https://drive.google.com/thumbnail?id=1KArrqr-kPvka1bIofil_eHQR2EiYN_cs&sz=w1200",
+    26:"https://drive.google.com/thumbnail?id=1HYdpU6YrnH-nu3JLPghssUJlru5vvN9l&sz=w1200",
+    27:"https://drive.google.com/thumbnail?id=1Mrmncyzkwlggvs-XFmR6yaT6G-846ClJ&sz=w1200",
+    28:"https://drive.google.com/thumbnail?id=1urhF4gKZzmwxVDeox0t14UFmcH5zHJtT&sz=w1200",
+    29:"https://drive.google.com/thumbnail?id=1wLOJQgfXHqsXcDtrGTvIkW9xnZwdBTiY&sz=w1200",
+    30:"https://drive.google.com/thumbnail?id=1nKx0FtECXvLIVQ7FXQhh1kCXhs3wboG2&sz=w1200",
+    31:"https://drive.google.com/thumbnail?id=12ATg756afjSvQa8pBUHOl1z-Ok-SNBVR&sz=w1200",
+    32:"https://drive.google.com/thumbnail?id=1FYZuW8IeTqd902DEvd6Pl9Uuijz8zi7C&sz=w1200",
+    33:"https://drive.google.com/thumbnail?id=1R7uoChQG95geUmhsDopF50AoaVXYzITI&sz=w1200",
+    34:"https://drive.google.com/thumbnail?id=13xtBpz8DtBl5Qq6-fBuHLJRssqo74vBq&sz=w1200",
+    35:"https://drive.google.com/thumbnail?id=1ZeuvpkTlPekjBpJvrUdg8GeoxfifsV0p&sz=w1200",
+    36:"https://drive.google.com/thumbnail?id=17pqCNp3RVwYEo-lL00yZvo1aJv7u7U3W&sz=w1200",
+    37:"https://drive.google.com/thumbnail?id=1STowBluHyqFadhmvg1MSzzxhVO7v0jT3&sz=w1200",
+    38:"https://drive.google.com/thumbnail?id=1IVpJmLxaRRGD4gRMbqzStgRIJCUNLlLR&sz=w1200",
+    39:"https://drive.google.com/thumbnail?id=1ZkmTRGjSKA7a_mVHLFsX2PCqte1neO2W&sz=w1200",
+    40:"https://drive.google.com/thumbnail?id=1fHtHUb2xag2Gk2vdAiU-iuuXmnhLoGM-&sz=w1200"
+  };
+
+  const products = [
+    { id:1, name:"Papel toalla Clásico blanco bulto 24 rollos x 90 hojas", category:"papel" },
+    { id:2, name:"Toalla sanitisu Z-Fold blanco, caja 24 paq x 150 toallas", category:"papel" },
+    { id:3, name:"Papel Toalla Sanitisu Natural bulto de 6 rollos x 240 mt", category:"papel" },
+    { id:4, name:"Papel toalla natural 6×250 mt", category:"papel" },
+    { id:5, name:"Papel higiénico natural caja 6 rollos x 400 mt", category:"papel" },
+    { id:6, name:"Papel higiénico natural caja 6 rollos x 500 mt", category:"papel" },
+    { id:7, name:"Papel higiénico Kleenex 2 pliegos bulto 6×250 mt", category:"papel" },
+    { id:8, name:"Bolsa transparente 5×10 × 1000u, calibre 0.80", category:"bolsas" },
+    { id:9, name:"Bolsa Transparente 18×18, 4–5 gal, PET, bulto × 500", category:"bolsas" },
+    { id:10, name:"Bolsa 23×30 transparente, LDPE calibre 1.25 (100 uni)", category:"bolsas" },
+    { id:11, name:"Bolsa traslúcida 37×50 bulto × 300", category:"bolsas" },
+    { id:12, name:"Bolsa traslúcida 32×40 bulto × 250", category:"bolsas" },
+    { id:13, name:"Bolsa 18×18 negra PON, caja × 500 (4–7 gal) cal.0.90", category:"bolsas" },
+    { id:14, name:"Bolsa 23.5×30 negra, caja 50 paquetes × 12", category:"bolsas" },
+    { id:15, name:"Bolsa negra 32×40, caja de 25 paquetes × 6", category:"bolsas" },
+    { id:16, name:"Bolsa negra 37×50, PEN cal.1.75, caja × 200", category:"bolsas" },
+    { id:17, name:"Cuchara biodegradable crema (paddy fiber) paq × 25", category:"desechables" },
+    { id:18, name:"Plato de bagazo 6” caja × 1000", category:"desechables" },
+    { id:19, name:"Plato de bagazo 9” caja × 500", category:"desechables" },
+    { id:20, name:"Revolvedor madera 5.5” paq × 1000, punta redonda", category:"desechables" },
+    { id:21, name:"Revolvedor madera 5.5” empacado paq × 1000", category:"desechables" },
+    { id:22, name:"Revolvedor madera 7” paq × 1000, punta redonda", category:"desechables" },
+    { id:23, name:"Jabón de manos Almendras blanco galón", category:"limpieza" },
+    { id:24, name:"Jabón de manos almendra perlado bolsa 900 ml", category:"limpieza" },
+    { id:25, name:"Jabón de manos cherry bolsa 900 ml", category:"limpieza" },
+    { id:26, name:"Clorox Original 3.25% galón /128 oz", category:"limpieza" },
+    { id:27, name:"Clorox 3% galón", category:"limpieza" },
+    { id:28, name:"Sip Clorox hipoclorito de sodio 3.6% galón", category:"limpieza" },
+    { id:29, name:"Desinfectante directo Amonio Cuaternario 0.03% lavanda galón", category:"limpieza" },
+    { id:30, name:"Desinfectante directo Amonio Cuaternario 0.03% manzana galón", category:"limpieza" },
+    { id:31, name:"Desinfectante lavanda súper concentrado (galón blanco)", category:"limpieza" },
+    { id:32, name:"Desinfectante concentrado vainilla cítrica (galón blanco)", category:"limpieza" },
+    { id:33, name:"Desinfectante manzana súper concentrado (galón blanco)", category:"limpieza" },
+    { id:34, name:"Desinfectante bebé súper concentrado (galón)", category:"limpieza" },
+    { id:35, name:"Multipropósito desengrasante SIP naranja ×946 ml", category:"limpieza" },
+    { id:36, name:"Germitrol 10 (amonio cuaternario 10%) galón", category:"limpieza" },
+    { id:37, name:"Germitrol 200 (amonio cuaternario 2%)", category:"limpieza" },
+    { id:38, name:"Germitrol 550 galón", category:"limpieza" },
+    { id:39, name:"VIRUGERM – virucida/germicida – frasco 12/925 ml", category:"limpieza" },
+    { id:40, name:"VIRUGERM – virucida/germicida – galón", category:"limpieza" }
+  ];
+
+  let cart = JSON.parse(localStorage.getItem('mogroupCart')||'[]');
+  let current = 'all';
+  let term = '';
+  let collapsed = (localStorage.getItem('mogroupCartCollapsed') ?? 'true') === 'true';
+
+  const $ = s => document.querySelector(s);
+  const $$ = s => document.querySelectorAll(s);
+  const imgFor = id => imageMap[id] || PLACEHOLDER;
+  const toast = msg => { const n = $('#notice'); n.textContent = msg; n.classList.add('show'); setTimeout(()=> n.classList.remove('show'), 2600); };
+  const save = () => localStorage.setItem('mogroupCart', JSON.stringify(cart));
+  const saveCollapsed = () => localStorage.setItem('mogroupCartCollapsed', String(collapsed));
+
+  function renderProducts(){
+    const grid = $('#productsGrid'); grid.innerHTML='';
+    const list = products.filter(p => (current==='all'||p.category===current) && p.name.toLowerCase().includes(term.toLowerCase()));
+    if(!list.length){
+      grid.innerHTML = `<div class="card" style="grid-column:1/-1;align-items:center;justify-content:center;padding:24px;color:#d7e3fa">No se encontraron productos</div>`;
+      return;
+    }
+    list.forEach(p=>{
+      const el = document.createElement('div'); el.className='card';
+      el.innerHTML = `
+        <div class="imgbox">
+          <img src="${imgFor(p.id)}" alt="${p.name}" loading="lazy" decoding="async"
+               onerror="this.onerror=null;this.src='${PLACEHOLDER}'">
+          <div class="pill">${p.category}</div>
+        </div>
+        <div class="info">
+          <div class="title">${p.name}</div>
+          <span class="chip">${p.category}</span>
+          <div class="actions">
+            <div class="qty">
+              <button onclick="q(${p.id},-1)" aria-label="menos">-</button>
+              <input id="qty-${p.id}" type="number" min="1" value="1" inputmode="numeric">
+              <button onclick="q(${p.id},1)" aria-label="más">+</button>
+            </div>
+            <button class="add" onclick="add(${p.id})"><i class="fa-solid fa-cart-plus"></i> Agregar</button>
+          </div>
+        </div>`;
+      grid.appendChild(el);
+    });
+  }
+
+  function renderCart(){
+    const wrap = $('#items'); const tot = $('#total'); const cnt = $('#cartCount');
+    const w = $('#whats'); const p = $('#pdf');
+    if(!cart.length){
+      wrap.innerHTML = `<div class="row" style="justify-content:center;color:var(--cart-ink-muted)">La cotización está vacía</div>`;
+      tot.textContent = 'Total: 0 producto(s)'; cnt.textContent = '0';
+      w.disabled = true; p.disabled = true; return;
+    }
+    let totalCount = 0; wrap.innerHTML = '';
+    cart.forEach(it=>{
+      totalCount += it.quantity;
+      const row = document.createElement('div'); row.className='row';
+      row.innerHTML = `
+        <div style="flex:1">
+          <div class="name">${it.name}</div>
+          <div class="qtytxt">Cantidad: ${it.quantity}</div>
+        </div>
+        <button class="rm" onclick="delp(${it.id})" title="Eliminar">&times;</button>`;
+      wrap.appendChild(row);
+    });
+    tot.textContent = `Total: ${totalCount} producto(s)`; cnt.textContent = String(totalCount);
+    w.disabled = false; p.disabled = false;
+  }
+
+  function q(id, d){ const i = document.getElementById(`qty-${id}`); let v = parseInt(i.value || '1') + d; if(v<1) v=1; i.value=v; }
+  function add(id){
+    const qty = parseInt(document.getElementById(`qty-${id}`).value || '1');
+    const p = products.find(x=>x.id===id);
+    const e = cart.find(x=>x.id===id);
+    if(e) e.quantity += qty; else cart.push({id:p.id, name:p.name, quantity:qty, category:p.category});
+    document.getElementById(`qty-${id}`).value = 1;
+    save(); renderCart(); toast(`+${qty} agregado(s): ${p.name}`);
+  }
+  function delp(id){ cart = cart.filter(x=>x.id!==id); save(); renderCart(); toast('Producto eliminado'); }
+  function clearAll(){ if(!cart.length) return; if(confirm('¿Vaciar toda la cotización?')){ cart=[]; save(); renderCart(); toast('Cotización vaciada'); } }
+  function setCollapsed(v){
+    collapsed = v;
+    const c = $('#cart'), ch = $('#chev'), t = $('#ttext');
+    if(collapsed){ c.classList.add('collapsed'); ch.classList.remove('fa-chevron-down'); ch.classList.add('fa-chevron-up'); t.textContent='Abrir'; }
+    else{ c.classList.remove('collapsed'); ch.classList.remove('fa-chevron-up'); ch.classList.add('fa-chevron-down'); t.textContent='Cerrar'; }
+    saveCollapsed();
+  }
+
+  function waMessage(info=null){
+    let m="¡Hola! Me gustaría solicitar la siguiente cotización:\n\n";
+    cart.forEach(i=> m+=`• ${i.name} - Cantidad: ${i.quantity}\n`);
+    m+=`\nTotal: ${cart.reduce((a,i)=>a+i.quantity,0)} producto(s)\n\n`;
+    if(info){
+      m+=`*Información de contacto:*\nNombre: ${info.name}\nEmail: ${info.email}\nTeléfono: ${info.phone}\n`;
+      if(info.company) m+=`Empresa: ${info.company}\n`;
+      m+='\n';
+    }
+    m+="Fecha: "+new Date().toLocaleDateString();
+    return encodeURIComponent(m);
+  }
+  function sendWA(){ const url=`https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage()}`; window.open(url,'_blank'); }
+
+  function generatePDF(){
+    try{
+      if(!cart.length){ toast('Agrega productos antes de generar el PDF'); return; }
+      const jsp = window.jspdf; if(!jsp || !jsp.jsPDF){ alert('No se pudo cargar jsPDF.'); return; }
+      const { jsPDF } = jsp;
+      const doc = new jsPDF('p','mm','a4');
+
+      doc.setFillColor(13,21,32); doc.rect(0,0,210,28,'F');
+      doc.setFontSize(18); doc.setTextColor(255,255,255);
+      doc.text('COTIZACIÓN - MOGROUP', 105, 17, {align:'center'});
+
+      doc.setFontSize(10); doc.setTextColor(120,130,145);
+      doc.text('Fecha: '+new Date().toLocaleDateString(), 14, 36);
+
+      let y = 48;
+      doc.setFillColor(240,244,252); doc.rect(14,y-8,182,8,'F');
+      doc.setFontSize(12); doc.setTextColor(30,40,55); doc.setFont(undefined,'bold');
+      doc.text('Producto', 18, y-2);
+      doc.text('Cantidad', 190, y-2, {align:'right'});
+      doc.setFont(undefined,'normal'); doc.setTextColor(25,30,40); doc.setFontSize(11);
+      y += 8;
+
+      cart.forEach(it=>{
+        if(y > 275){ doc.addPage(); y = 20; }
+        const lines = doc.splitTextToSize(it.name, 160);
+        lines.forEach((ln, idx)=>{
+          if(y > 285){ doc.addPage(); y = 20; }
+          doc.text(ln, 18, y);
+          if(idx===0) doc.text(String(it.quantity), 190, y, {align:'right'});
+          y += 6;
+        });
+        y += 2;
+      });
+
+      if(y > 285){ doc.addPage(); y = 20; }
+      doc.setFont(undefined,'bold'); doc.setTextColor(20,25,35); doc.setFontSize(12);
+      const total = cart.reduce((a,i)=>a+i.quantity,0);
+      doc.text(`Total: ${total} producto(s)`, 18, y+2);
+
+      doc.save('cotizacion_mogroup.pdf');
+      toast('PDF generado');
+    }catch(err){ console.error(err); alert('Ocurrió un error al generar el PDF.'); }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    renderProducts(); renderCart(); setCollapsed(collapsed);
+
+    $('#searchInput').addEventListener('input', e=>{ term=e.target.value; renderProducts(); });
+
+    $$('.cat').forEach(b=>{
+      b.addEventListener('click', function(){
+        $$('.cat').forEach(x=>x.classList.remove('active'));
+        this.classList.add('active'); current = this.dataset.category; renderProducts();
+      });
+    });
+
+    $('#clear').addEventListener('click', clearAll);
+    $('#toggle').addEventListener('click', ()=> setCollapsed(!collapsed));
+    $('#whats').addEventListener('click', sendWA);
+    $('#pdf').addEventListener('click', generatePDF);
+
+    window.q = q; window.add = add; window.delp = delp;
+  });
+</script>
+</body>
+</html>

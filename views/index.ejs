@@ -48,7 +48,7 @@
         <h2 class="section-title">Nuestros Clientes Destacados</h2>
         <div class="clients-grid">
             <% clients.forEach(client => { %>
-            <div class="client-card" data-client-id="<%= client._id %>">
+            <div class="client-card" data-client="<%= client._id %>">
                 <div class="client-logo">
                     <img src="/client-logos/<%= client.logo %>" alt="<%= client.name %> Logo">
                 </div>
@@ -57,7 +57,7 @@
             </div>
             <% }); %>
             
-            <div class="client-card" data-client-id="new">
+            <div class="client-card" data-client="new">
                 <div class="client-logo">
                     <img src="https://via.placeholder.com/150/FFFFFF/0F2438?text=++" alt="Nuevo Cliente Logo">
                 </div>
